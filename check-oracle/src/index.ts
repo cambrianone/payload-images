@@ -6,12 +6,9 @@ const toLeBytes = (n: number | string | bigint): Uint8Array =>
   new BN(String(n)).toArrayLike(Buffer, 'le', 8) as Uint8Array;
 
 
-const run = async (_input: unknown): Promise<void> => {
+const run = async (_input: any): Promise<void> => {
   try {
-    // Should match with AVS PoA name
-    const poaName = 'test';
-    // Should match with AVS PoA proposal storage key
-    const proposalStorageKey = 'test';
+    const { poaName, proposalStorageKey } = _input;
 
     const storageSpace = 3 * 25;
 
