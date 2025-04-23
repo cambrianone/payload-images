@@ -5,8 +5,6 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
-serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 solana-program = "1.18.2"
-base58 = "0.2"
-serde_repr = "0.1"
+cambrian-rust-sdk = { path = "../cambrian-rust-sdk" }
