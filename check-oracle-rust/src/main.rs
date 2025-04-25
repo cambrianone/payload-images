@@ -1,3 +1,7 @@
+//! Cambrian check-oracle payload - Rust implementation
+//! 
+//! Validates oracle data and generates instructions for Cambrian AVS
+
 use std::env;
 use std::str::FromStr;
 
@@ -15,6 +19,7 @@ fn main() -> Result<()> {
     let sysvar_instructions = Pubkey::from_str("Sysvar1nstructions1111111111111111111111111")?;
 
     let poa_state_key = input.poa_name.as_bytes();
+    // Storage space for Cambrian proposal (3 instructions × 25 bytes)
     let storage_space: u32 = 3 * 25;
     let (proposal_storage_pda, _) = Pubkey::find_program_address(
         &[
