@@ -1,16 +1,15 @@
+# Version control
+.git/
+.gitignore
+.github/
+
 # Node.js dependencies
 node_modules/
 yarn-error.log
 yarn-debug.log
 
-# TypeScript build output
-dist/
-build/
-
 # Rust build artifacts
-/target/
-**/target/
-Cargo.lock
+target/
 
 # IDE files
 .vscode/
@@ -18,16 +17,19 @@ Cargo.lock
 *.swp
 *.swo
 
-# Environment variables
-.env
-.env.local
+# Documentation and other files not needed in container
+README.md
+CLAUDE.md
+LICENSE
 
 # Logs
 logs/
 *.log
 
+# Environment variables
+.env
+.env.local
+
 # OS files
 .DS_Store
 Thumbs.db
-
-CLAUDE.md
