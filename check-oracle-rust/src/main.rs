@@ -1,6 +1,6 @@
 //! Cambrian check-oracle payload - Rust implementation
 //! 
-//! Validates oracle data and generates instructions for Cambrian AVS
+//! Validates oracle data and generates instructions for Cambrian AVS (Actively Validated Services)
 
 use std::env;
 use std::str::FromStr;

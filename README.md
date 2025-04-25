@@ -2,7 +2,7 @@
 
 **Reference implementations for Cambrian payload containers**
 
-This repository contains ready-to-use examples of payload containers that integrate with the Cambrian platform's Autonomously Verifying Services (AVS) ecosystem.
+This repository contains ready-to-use examples of payload containers that integrate with the Cambrian platform's Actively Validated Services (AVS) ecosystem.
 
 ## 📋 Prerequisites
 
@@ -66,12 +66,17 @@ A simple demonstration payload that:
 - Uses the Solana system program's transfer instruction
 - Formats the instruction into the required output format with proper encoding
 
-### [`cambrian-rust-sdk/src/lib.rs`](./cambrian-rust-sdk/src/lib.rs)
+### [`cambrian-rust-sdk`](./cambrian-rust-sdk/src/lib.rs)
 A Rust library that provides:
 - Type definitions for payload input/output formats
 - Conversion utilities between Solana instructions and Cambrian payload formats
 - Serialization helpers for JSON output
 - Account role handling with proper bitflag encoding
+
+Now available on crates.io! Add to your Rust project with:
+```bash
+cargo add cambrian-rust-sdk
+```
 
 ## 🔌 Integration Guide
 

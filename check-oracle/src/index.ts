@@ -1,6 +1,6 @@
 /**
  * Cambrian check-oracle payload implementation
- * Validates oracle data for Cambrian AVS and generates corresponding instructions
+ * Validates oracle data for Cambrian AVS (Actively Validated Services) and generates corresponding instructions
  */
 import { getCheckOracleInstructionDataCodec } from '@cambrianone/oracle-client';
 import { AccountRole, address, getBase58Codec, getProgramDerivedAddress, getUtf8Codec } from '@solana/web3.js';

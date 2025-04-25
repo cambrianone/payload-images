@@ -1,4 +1,4 @@
-//! Cambrian Rust SDK - Type definitions and utilities for Cambrian AVS payloads
+//! Cambrian Rust SDK - Type definitions and utilities for Cambrian AVS (Actively Validated Services) payloads
 
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
