@@ -162,6 +162,41 @@ enum AccountRole {
    camb payload run-container -a <AVS public key | AVS URL> my-custom-payload
    ```
 
+### Migrating an Existing Project
+
+If you want to migrate your own project while preserving git history:
+
+#### For Rust Projects
+
+1. **Add the Cambrian SDK** to your project:
+   ```bash
+   cargo add cambrian-rust-sdk
+   ```
+
+2. **Add a binary target** to your Cargo.toml:
+   ```toml
+   [[bin]]
+   name = "cambrian"
+   path = "src/cambrian.rs"
+   ```
+
+Use our example [check-oracle-rust](./check-oracle-rust/src/main.rs) as a reference for `cambrian.rs`.
+
+3. **Create a Dockerfile** similar to the [check-oracle-rust Dockerfile](./check-oracle-rust/Dockerfile):
+
+#### For TypeScript Projects
+
+1. **Add the Cambrian SDK** to your project:
+   ```bash
+   yarn add @cambrianone/sdk
+   # or
+   npm install @cambrianone/sdk
+   ```
+
+2. **Add a payload entry point** to your project using [check-oracle/src/index.ts](./check-oracle/src/index.ts) as a reference.
+
+3. **Create a Dockerfile** similar to the [check-oracle Dockerfile](./check-oracle/Dockerfile):
+
 ### Example: Creating a Custom Token Transfer Payload
 
 Here's a minimal example of creating a custom SPL token transfer payload in TypeScript:
