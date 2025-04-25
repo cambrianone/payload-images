@@ -13,6 +13,7 @@ npm i --global @cambrianone/camb-client@latest
 # Requirements
 - Node.js ≥ 22.0.0
 - Docker ≥ 20.0.0
+- Rust ≥ 1.86.0 (only needed if working with Rust payloads locally)
 ```
 
 ## 🚀 Quick Start
@@ -25,7 +26,8 @@ cd payload-images
 # Build a payload container (choose one)
 docker build -t payload-check-oracle ./check-oracle
 # OR
-docker build -t payload-check-oracle-rust ./check-oracle-rust
+# For the Rust container, build from the root directory to include the SDK
+docker build -t payload-check-oracle-rust -f ./check-oracle-rust/Dockerfile .
 
 # Run the payload against your AVS
 camb payload run-container -a <AVS public key | AVS URL> payload-check-oracle
@@ -205,10 +207,13 @@ Common issues and solutions:
 2. **Missing accounts**: All required accounts must be included with correct roles
 3. **Incorrect data encoding**: Instruction data must be properly encoded
 4. **Environment variable access**: Verify your container can access the `CAMB_INPUT` environment variable
+5. **Rust SDK access**: For Rust containers, build from the root directory to include the SDK
+6. **Instruction data format differences**: Note that the TypeScript implementation encodes data in Base58 format, while the Rust implementation uses a byte array
 
 To debug locally:
 - Run with verbose logging: `docker run -e CAMB_INPUT='...' -e DEBUG=true my-payload`
 - Inspect container logs: `docker logs <container-id>`
+- Test with standard input: `docker run -e CAMB_INPUT='{"executorPDA":"executor-pda-address","apiUrl":"https://api.example.com","poaName":"test-poa","proposalStorageKey":"test-storage-key"}' my-payload`
 - Test different input parameters to validate behavior
 
 ## 🛠️ Complete Workflow
@@ -231,9 +236,13 @@ Follow these steps for a full setup:
    docker build -t oracle-update-current-date ./oracle-update-examples/current-date/container-stream
    ```
 
-4. **Build the payload image**
+4. **Build the payload image** (choose one)
    ```bash
+   # For TypeScript
    docker build -t payload-check-oracle ./check-oracle
+   
+   # For Rust (must be built from root directory to access the SDK)
+   docker build -t payload-check-oracle-rust -f ./check-oracle-rust/Dockerfile .
    ```
 
 5. **Scaffold operator(s)**
@@ -249,9 +258,13 @@ Follow these steps for a full setup:
    camb operator run -a <AVS public key> -v <voter public key>
    ```
 
-7. **Run the payload**
+7. **Run the payload** (choose one based on what you built)
    ```bash
+   # For TypeScript
    camb payload run-container -a <AVS public key | AVS URL> payload-check-oracle
+   
+   # For Rust
+   camb payload run-container -a <AVS public key | AVS URL> payload-check-oracle-rust
    ```
 
 ## 📚 Resources
