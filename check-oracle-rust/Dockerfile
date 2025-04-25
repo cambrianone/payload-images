@@ -1,6 +1,7 @@
-FROM rust:1.75 as builder
-WORKDIR /usr/src/myapp
-COPY . .
+FROM rust:1.86 as builder
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+WORKDIR /usr/src/app/check-oracle-rust
 RUN cargo install --path .
 
 FROM debian
