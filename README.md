@@ -103,7 +103,7 @@ Your container must write a JSON-stringified object to stdout:
           "role": 0|1|2|3      // Account role bitflag
         }
       ],
-      "data": "string",        // Base58-serialized data
+      "data": "string" | number[],        // Data as base58-serialized string or uint8 array
       "programAddress": "string" // Target program address
     }
   ]
