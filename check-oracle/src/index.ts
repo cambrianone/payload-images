@@ -1,7 +1,11 @@
+/**
+ * Cambrian check-oracle payload implementation
+ * Validates oracle data for Cambrian AVS and generates corresponding instructions
+ */
 import { getCheckOracleInstructionDataCodec } from '@cambrianone/oracle-client';
 import { AccountRole, address, getBase58Codec, getProgramDerivedAddress, getUtf8Codec } from '@solana/web3.js';
-
 import { BN } from 'bn.js';
+
 const toLeBytes = (n: number | string | bigint): Uint8Array =>
   new BN(String(n)).toArrayLike(Buffer, 'le', 8) as Uint8Array;
 
@@ -10,10 +14,13 @@ const run = async (_input: any): Promise<void> => {
   try {
     const { poaName, proposalStorageKey } = _input;
 
+    // Storage space for Cambrian proposal (3 instructions × 25 bytes)
     const storageSpace = 3 * 25;
 
+    // Cambrian threshold signature program address
     const SOLANA_THRESHOLD_SIGNATURE_PROGRAM_PROGRAM_ADDRESS = address('FGgNUqGxdEYM1gVtQT5QcTbzNv4y1UPoVvXPRnooBdxo');
 
+    // Cambrian oracle program address
     const ORACLE_PROGRAM_PROGRAM_ADDRESS = address('ECb6jyKXDTE8NjVjsKgNpjSjcv4h2E7JQ42yKqWihBQE');
 
     const poaStateKey = getUtf8Codec().encode(poaName);

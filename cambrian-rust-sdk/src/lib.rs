@@ -1,25 +1,32 @@
+//! Cambrian Rust SDK - Type definitions and utilities for Cambrian AVS payloads
+
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use serde_repr::Serialize_repr;
 use solana_program::instruction::Instruction;
 
+/// Account roles for Cambrian payload instructions with bitflag representation
+/// 
+/// Bitflag guide: is signer ⌄⌄ is writable
 #[derive(Serialize_repr)]
 #[repr(u8)]
 pub enum AccountRole {
-    // Bitflag guide: is signer ⌄⌄ is writable
     WritableSigner = 0b11,
     ReadonlySigner = 0b10,
     Writable = 0b01,
     Readonly = 0b00,
 }
 
+/// Input structure from CAMB_INPUT environment variable
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Input {
+    /// Name of the Proof of Authority
     pub poa_name: String,
     pub proposal_storage_key: String,
 }
 
+/// Account metadata for a Cambrian payload instruction
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountMeta {
@@ -27,6 +34,7 @@ pub struct AccountMeta {
     pub role: AccountRole,
 }
 
+/// Cambrian proposal instruction format
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProposalInstruction {
@@ -35,13 +43,18 @@ pub struct ProposalInstruction {
     pub data: Vec<u8>,
 }
 
+/// Complete response output for a Cambrian payload
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Response {
+    /// List of instructions to be included in the proposal
     pub proposal_instructions: Vec<ProposalInstruction>,
 }
 
 impl Response {
+    /// Serializes the response to a JSON string for output
+    /// 
+    /// Returns a properly formatted JSON string or an error
     pub fn to_output_ix(&self) -> Result<String> {
         Ok(serde_json::to_string_pretty(&self)?)
     }
