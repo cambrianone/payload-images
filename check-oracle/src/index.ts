@@ -62,6 +62,10 @@ const run = async (_input: any): Promise<void> => {
           ),
         },
       ],
+      storagePayload: {
+        encoding: 'utf-8',
+        data: `Local time: ${Date.now()}`,
+      },
     };
 
 

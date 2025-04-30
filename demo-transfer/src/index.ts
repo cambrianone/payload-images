@@ -23,6 +23,10 @@ const run = async ({
         data: getBase58Codec().decode(data),
         ...rest,
       }],
+      storagePayload: {
+        encoding: 'utf-8',
+        data: `Local time: ${Date.now()}`,
+      },
     };
     console.log(JSON.stringify(res));
   } catch (e) {

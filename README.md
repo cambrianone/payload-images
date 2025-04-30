@@ -49,6 +49,7 @@ camb payload run-container -a <AVS public key | AVS URL> payload-check-oracle
 ### [`check-oracle/src/index.ts`](./check-oracle/src/index.ts)
 This TypeScript implementation creates an oracle validation instruction. It:
 - Processes input from the `CAMB_INPUT` environment variable
+- Generates data to store in oracle storage
 - Derives program addresses using seeds for the proposal storage and PoA state
 - Constructs an instruction to check oracle data with proper account metadata
 - Returns the formatted instruction data as JSON to stdout
@@ -62,6 +63,7 @@ The Rust version of the oracle checker that:
 
 ### [`demo-transfer/src/index.ts`](./demo-transfer/src/index.ts)
 A simple demonstration payload that:
+- Generates data to store in oracle storage
 - Creates a SOL transfer instruction from the executor PDA to a hardcoded address
 - Uses the Solana system program's transfer instruction
 - Formats the instruction into the required output format with proper encoding
@@ -111,7 +113,12 @@ Your container must write a JSON-stringified object to stdout:
       "data": "string" | number[],        // Data as base58-serialized string or uint8 array
       "programAddress": "string" // Target program address
     }
-  ]
+  ],
+  "storagePayload":
+  | { "encoding": "utf-8"; "data": "string" }
+  | { "encoding": "bytes"; "data": number[] }
+  | { "encoding": "base58"; "data": "string" }
+  | { "encoding": "base64"; "data": "string" };
 }
 ```
 
@@ -135,11 +142,11 @@ enum AccountRole {
 
 2. **Understand the payload lifecycle**:
    ```
-   Input (CAMB_INPUT env var) → Process data → Generate instruction(s) → Output JSON to stdout
+   Input (CAMB_INPUT env var) → Process data → Fetch / generate data to store in oracle storage and generate instruction(s) → Output JSON to stdout
    ```
 
 3. **Implement your logic**:
-   - Modify the code to generate your specific Solana instructions
+   - Modify the code to fetch / generate oracle data and to generate your specific Solana instructions
    - Ensure you follow the proper account metadata format (address and role)
    - Encode instruction data correctly (typically as Base58)
 
@@ -225,7 +232,11 @@ const run = async (input) => {
           role: (meta.isSigner ? 2 : 0) | (meta.isWritable ? 1 : 0)
         })),
         data: getBase58Codec().decode(instruction.data),
-      }]
+      }],
+      storagePayload: {
+        encoding: 'utf-8',
+        data: `Local time: ${Date.now()}`,
+      },
     };
     
     console.log(JSON.stringify(response));
