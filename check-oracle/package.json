@@ -9,8 +9,8 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@cambrianone/oracle-client": "^0.1.0-beta.0",
-    "@solana/web3.js": "^2.0.0",
+    "@cambrianone/oracle-client": "^1.19.4",
+    "@solana/kit": "^2.0.0",
     "bn.js": "^5.2.1",
     "ws": "^8.18.0"
   }

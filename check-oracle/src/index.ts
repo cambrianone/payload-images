@@ -3,12 +3,7 @@
  * Validates oracle data for Cambrian AVS (Actively Validated Services) and generates corresponding instructions
  */
 import { getCheckOracleInstructionDataCodec } from '@cambrianone/oracle-client';
-import { AccountRole, address, getBase58Codec, getProgramDerivedAddress, getUtf8Codec } from '@solana/web3.js';
-import { BN } from 'bn.js';
-
-const toLeBytes = (n: number | string | bigint): Uint8Array =>
-  new BN(String(n)).toArrayLike(Buffer, 'le', 8) as Uint8Array;
-
+import { AccountRole, address, Endian, getBase58Codec, getProgramDerivedAddress, getU64Codec, getUtf8Codec } from '@solana/kit';
 
 const run = async (_input: any): Promise<void> => {
   try {
@@ -18,15 +13,20 @@ const run = async (_input: any): Promise<void> => {
     const storageSpace = 3 * 25;
 
     // Cambrian threshold signature program address
-    const SOLANA_THRESHOLD_SIGNATURE_PROGRAM_PROGRAM_ADDRESS = address('FGgNUqGxdEYM1gVtQT5QcTbzNv4y1UPoVvXPRnooBdxo');
+    const SOLANA_THRESHOLD_SIGNATURE_PROGRAM_PROGRAM_ADDRESS = address('HPGYYhSMhNWcqG4zUeM7T5jRrcZmJjdkADQL5eo3Q8Go');
 
     // Cambrian oracle program address
-    const ORACLE_PROGRAM_PROGRAM_ADDRESS = address('ECb6jyKXDTE8NjVjsKgNpjSjcv4h2E7JQ42yKqWihBQE');
+    const ORACLE_PROGRAM_PROGRAM_ADDRESS = address('6c9oWqHxydVHBKVd3D4BEw2FKvWh14zFetT4zbkXSwzb');
 
     const poaStateKey = getUtf8Codec().encode(poaName);
 
     const [proposalStoragePDA] = await getProgramDerivedAddress({
-      seeds: ['STORAGE', poaName, proposalStorageKey, toLeBytes(storageSpace)],
+      seeds: [
+        'STORAGE',
+        poaStateKey,
+        getUtf8Codec().encode(proposalStorageKey),
+        getU64Codec({ endian: Endian.Little }).encode(storageSpace)
+      ],
       programAddress: SOLANA_THRESHOLD_SIGNATURE_PROGRAM_PROGRAM_ADDRESS,
     });
 
