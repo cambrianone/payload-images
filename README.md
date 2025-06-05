@@ -41,6 +41,7 @@ camb payload run-container -a <AVS public key | AVS URL> payload-check-oracle
 |---------|----------|-------------|------|
 | [`check-oracle`](./check-oracle/src/index.ts) | TypeScript | Validates oracle data and generates instructions | [Source](./check-oracle/src/index.ts) |
 | [`check-oracle-rust`](./check-oracle-rust/src/main.rs) | Rust | Same functionality as check-oracle, implemented in Rust | [Source](./check-oracle-rust/src/main.rs) |
+| [`timestamp-oracle-stats`](./timestamp-oracle-stats/src/index.ts) | TypeScript | Collecting statistics from timestamps stored to oracle | [Source](./timestamp-oracle-stats/src/index.ts) |
 | [`demo-transfer`](./demo-transfer/src/index.ts) | TypeScript | Demonstrates Solana token transfer instruction creation | [Source](./demo-transfer/src/index.ts) |
 | [`cambrian-rust-sdk`](./cambrian-rust-sdk/src/lib.rs) | Rust | Shared library for building Rust-based payloads | [Source](./cambrian-rust-sdk/src/lib.rs) |
 
@@ -60,6 +61,11 @@ The Rust version of the oracle checker that:
 - Finds program-derived addresses for proposal storage and PoA state
 - Creates a Solana instruction with the appropriate accounts and data
 - Formats and outputs the instruction as JSON using the SDK's helper methods
+
+### [`timestamp-oracle-stats/src/index.ts`](./timestamp-oracle-stats/src/index.ts)
+This TypeScript implementation creates an oracle validation instruction. It:
+- Works the same way as `check-oracle` implementation does
+- Uses [cambrian-oracle-reference](https://github.com/cambrianone/cambrian-oracle-reference) which collects different kinds of statistics for oracle data (such as minimum, maximum, and median values)
 
 ### [`demo-transfer/src/index.ts`](./demo-transfer/src/index.ts)
 A simple demonstration payload that:
@@ -323,6 +329,7 @@ Follow these steps for a full setup:
 - [Cambrian Platform Documentation](https://cambrianone.github.io/docs/camb-mvp/)
 - [CLI Flow Guide](https://cambrianone.github.io/docs/camb-mvp/docs/cli-flow/)
 - [Oracle Update Examples](https://github.com/cambrianone/oracle-update-examples)
+- [Cambrian Oracle Reference](https://github.com/cambrianone/cambrian-oracle-reference)
 
 ## 📄 License
 

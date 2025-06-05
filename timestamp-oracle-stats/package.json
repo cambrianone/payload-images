@@ -1,5 +1,5 @@
 {
-  "name": "check-oracle",
+  "name": "timestamp-oracle-stats",
   "scripts": {
     "build": "tsc"
   },
